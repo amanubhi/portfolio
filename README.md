@@ -2,7 +2,7 @@
 
 Live: https://amanubhi.github.io/portfolio/
 
-A responsive, buildless portfolio using HTML, CSS, and JavaScript. GitHub Pages publishes the root of `main`. No API keys, backend, or install step are required. Local preview: `python3 -m http.server 8766`.
+A responsive, buildless portfolio using HTML, CSS, and JavaScript. The visual direction is inspired by the Quinn Squarespace demo: oversized serif typography, oxide-red text, a personal portrait, and staggered project imagery. The portrait is sourced from the owner’s public GitHub avatar. This is an independent implementation hosted on GitHub Pages. GitHub Pages publishes the root of `main`. No API keys, backend, or install step are required. Local preview: `python3 -m http.server 8766`.
 
 ## Content
 
