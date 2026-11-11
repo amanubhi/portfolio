@@ -27,3 +27,24 @@ function answerCase(selected,choices){
 function finish(){progress.textContent='INVESTIGATION COMPLETE';content.innerHTML='<span class="case-icon" aria-hidden="true">✓</span><h3 tabindex="-1">'+score+' / 3 cases solved</h3><p>'+(score===3?'Sharp instincts. You checked the data before trusting the headline.':'Every good analyst keeps asking questions. Now you’ve seen three common traps to watch for.')+'</p><p>That’s the mindset behind my projects: understand the data, challenge assumptions, make the result useful.</p><button class="button" id="restart">Play again ↻</button>';document.getElementById('restart').addEventListener('click',begin);content.querySelector('h3').focus();}
 document.getElementById('start').addEventListener('click',begin);
 document.getElementById('year').textContent=new Date().getFullYear();
+
+// Project exploration uses native buttons and announces the visible count.
+const filterButtons = [...document.querySelectorAll('[data-filter]')];
+const projectCards = [...document.querySelectorAll('[data-category]')];
+filterButtons.forEach(button => button.addEventListener('click', () => {
+  filterButtons.forEach(item => { const active=item===button; item.classList.toggle('active',active); item.setAttribute('aria-pressed',String(active)); });
+  projectCards.forEach(card => { card.hidden=button.dataset.filter!=='all' && card.dataset.category!==button.dataset.filter; });
+  const count=projectCards.filter(card=>!card.hidden).length;
+  document.getElementById('project-count').textContent=`${count} ${count===1?'project':'projects'}`;
+}));
+const processSteps = [
+ ['01 / START WITH THE DECISION','What would you do differently?','Define the business question, the audience, and the decision before choosing a metric. A technically correct query can still answer the wrong question.','Should an aspiring analyst prioritize a rare, high-paying skill or a skill employers request more often?'],
+ ['02 / CHECK THE FOUNDATIONS','Know what a row represents.','Inspect keys, duplicates, missing values, date coverage, and relationships. Record what the dataset can support before turning it into a story.','The refreshed files contained 2M+ postings across January 2023–October 2026. Roughly 5% disclosed an annual salary, so salary findings needed that boundary.'],
+ ['03 / MAKE THE LOGIC EXPLICIT','A ranking is a modeling choice.','Build transformations with clear grain and readable SQL. Check how filters and ordering change the answer, and keep the workflow reproducible.','Ordering by demand first and salary second changed the interpretation. A high salary average alone did not establish a demand-and-salary sweet spot.'],
+ ['04 / CLOSE THE LOOP','Show the finding. Keep the caveat.','Communicate what changed, why it matters, and what remains uncertain. Give the reader a way to inspect the code and challenge the assumptions.','I corrected the earlier interpretation and documented salary coverage, snapshot-local IDs, and both datasets’ results alongside the queries.']
+];
+document.querySelectorAll('[data-step]').forEach(button=>button.addEventListener('click',()=>{
+ document.querySelectorAll('[data-step]').forEach(item=>{const active=item===button;item.classList.toggle('active',active);item.setAttribute('aria-pressed',String(active));});
+ const values=processSteps[Number(button.dataset.step)];
+ ['step-label','step-title','step-copy','step-example'].forEach((id,index)=>document.getElementById(id).textContent=values[index]);
+}));
